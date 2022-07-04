@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Infrastructure\ORM\Doctrine\Repository\DoctrineUserRepository: ~
+    App\Domain\Repository\UserRepository: '@App\Infrastructure\ORM\Doctrine\Repository\DoctrineUserRepository'
+
+    App\Application\Service\:
+        resource: '../../Application/Service/*'
+
+    App\Infrastructure\Http\:
+        resource: '../../../Infrastructure/Http/*'
+        public: true
+        tags: ['controller.service_arguments']

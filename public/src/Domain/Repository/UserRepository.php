@@ -9,5 +9,6 @@ interface UserRepository
 {
     public function findByEmail(string $email): ?User;
     public function findByCpf(string $cpf): ?User;
+    public function findById(int $id): ?User;
     public function persist(User $user): void;
 }

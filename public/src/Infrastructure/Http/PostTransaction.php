@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http;
 
-use App\Application\Command\RegisterUser;
-use App\Application\CommandHandler\RegisterUserCommandHandler;
-use App\Application\Service\Validator\RegisterUserValidator;
+use App\Application\Command\TransferMoney;
+use App\Application\CommandHandler\TransferMoneyCommandHandler;
+use App\Application\Service\Validator\TransferMoneyValidator;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,16 +14,16 @@ use Throwable;
 
 use function json_decode;
 
-final class PostUsers
+final class PostTransaction
 {
-    public function __construct(private RegisterUserCommandHandler $commandHandler, RegisterUserValidator $validator)
+    public function __construct(private TransferMoneyCommandHandler $commandHandler, TransferMoneyValidator $validator)
     {
         $this->commandHandler = $commandHandler;
         $this->validator      = $validator;
     }
 
     /**
-     * @Route("/users", methods={"POST"})
+     * @Route("/transaction", methods={"POST"})
      */
     public function __invoke(Request $request)
     {
@@ -37,11 +37,10 @@ final class PostUsers
 
         try {
             $this->commandHandler->handle(
-                new RegisterUser(
-                    $payload['name'],
-                    $payload['cpf'],
-                    $payload['emailAddress'],
-                    $payload['password']
+                new TransferMoney(
+                    (int) $payload['payer'],
+                    1, // $this->tokenStorage->getUser() = Payee,
+                    (float) $payload['value']
                 )
             );
         } catch (Throwable $th) {

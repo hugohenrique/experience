@@ -6,23 +6,38 @@ namespace App\Domain\Model;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-#[ORM\Entity]
-#[ORM\Table(name: "users")]
-#[UniqueEntity(fields: ['cpf', 'email'])]
-class User
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="users")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string", length=36)
+ * @ORM\DiscriminatorMap({"regular"="RegularUser", "shopkeeper"="Shopkeeper"})
+ * @UniqueEntity(fields={"cpf", "email"})
+ */
+abstract class User
 {
-    #[ORM\Id]
-    #[ORM\Column(type: "integer", length: 11)]
-    #[ORM\GeneratedValue(strategy: "AUTO")]
-    private int $id;
-    #[ORM\Id(type: "string")]
-    private string $name;
-    #[ORM\Id(type: "string", unique: true)]
-    private string $cpf;
-    #[ORM\Id(type: "string", unique: true)]
-    private string $email;
-    #[ORM\Id(type: "string")]
-    private string $password;
+    /**
+     * @ORM\Id()
+     * @ORM\Column(type="integer", length=11)
+     * @ORM\GeneratedValue("AUTO")
+     */
+    protected int $id;
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected string $name;
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    protected string $cpf;
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    protected string $email;
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected string $password;
 
     public function __construct(string $name, string $cpf, string $email, string $password)
     {
@@ -35,5 +50,10 @@ class User
     public function id(): int
     {
         return $this->id;
+    }
+
+    public function email(): string
+    {
+        return $this->email;
     }
 }
