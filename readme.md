@@ -6,6 +6,6 @@
 
 3. Na parte da Transferência, usaria o Specification pattern para ter a certeza que todos os critérios seriam atendidos para, de fato, efetuar a Transação. No exemplo que implementei, utilizei o Doctrine, pois ele facilita o processo, por tratar com uma transação.
 
-4. Na implementação do desafio, implementei o padrão CQS (Command Query Separation) com uma dose da arquitetura hexagonal, mas em um cenário real, acredito que o CQRS (Command Query Responsability Segratation) traria mais benefícios.
+4. Na implementação do desafio, implementei o padrão CQS (Command Query Separation) com uma dose da arquitetura hexagonal, mas em um cenário real, acredito que o CQRS (Command Query Responsibility Segregation) traria mais benefícios.
 
-5. Por conta dos imprevistos que tive, não consegui implementar o testes unitários e de integração. Mas, tendo em vista a simplicidade do fluxo do desafio, talvez não teria tanta necessidade. Mas é algo que gosto bastante de utilizar.
+5. Por conta dos imprevistos que tive, não consegui implementar os testes unitários e de integração. Mas é algo que gosto bastante de utilizar e no meu dia a dia, utilizo sempre.
